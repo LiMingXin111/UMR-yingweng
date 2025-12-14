@@ -1,0 +1,29 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Yingweng Medical Records</title>
+  <meta name="description" content="Yingweng medical records frontend (Session/JSESSIONID)." />
+  <link rel="stylesheet" href="/assets/app.css" />
+  <script>
+    // When served by Spring Boot, keep apiBase empty to use same-origin APIs.
+    // When served separately, use devserver.py which proxies /auth, /records, /qrcode.
+    window.__YINGWENG_CONFIG__ = {
+      apiBase: "",
+      appName: "Yingweng"
+    };
+  </script>
+</head>
+<body>
+  <noscript>
+    <div style="max-width:720px;margin:48px auto;padding:24px;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial;">
+      JavaScript is required to use this app.
+    </div>
+  </noscript>
+
+  <div id="app"></div>
+  <script type="module" src="/assets/app.js"></script>
+</body>
+</html>
