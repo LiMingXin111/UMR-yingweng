@@ -627,6 +627,24 @@ textarea { resize: vertical; min-height: 100px; }
   padding: 30px 18px;
 }
 
+.auth-min {
+  width: min(420px, 100%);
+  display: grid;
+  gap: 16px;
+}
+
+.umr-title {
+  margin: 4px 0 2px;
+  font-size: 34px;
+  letter-spacing: -0.8px;
+  text-align: center;
+}
+
+.auth-switch {
+  justify-content: center;
+  gap: 6px;
+}
+
 .auth-card {
   width: min(960px, 100%);
   display: grid;

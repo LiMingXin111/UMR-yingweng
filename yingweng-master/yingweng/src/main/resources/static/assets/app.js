@@ -777,48 +777,20 @@ function renderToast() {
 }
 
 function renderAuth() {
-  const tabLogin = state.authTab === 'login';
+  const tabLogin = state.authTab !== 'register';
   const tabRegister = state.authTab === 'register';
-
-  const hero = `
-    <div class="card hero">
-      <h2>${esc(APP_NAME)} Medical Records</h2>
-      <p>
-        A lightweight, session-based web UI built for the Yingweng backend.
-        Sign in as a doctor or a patient, then manage records with a calm, Apple-like design.
-      </p>
-      <div class="hr"></div>
-      <div class="stack">
-        <div class="badge info">${ICONS.users} Role-based UI</div>
-        <div class="badge success">${ICONS.qr} Built-in QR code</div>
-        <div class="badge warning">${ICONS.gear} Profile updates</div>
-      </div>
-      <div class="hr"></div>
-      <div class="note">
-        Tip: registration generates a UID like <span class="code">DOC000123</span> or <span class="code">PAT000123</span>.
-      </div>
-    </div>
-  `;
-
-  const tabs = `
-    <div class="segmented" role="tablist" aria-label="Authentication">
-      <button type="button" class="${tabLogin ? 'active' : ''}" data-action="auth-tab" data-tab="login">Sign in</button>
-      <button type="button" class="${tabRegister ? 'active' : ''}" data-action="auth-tab" data-tab="register">Create account</button>
-    </div>
-  `;
 
   const loginForm = `
     <form data-form="login" class="stack" autocomplete="on">
       <div class="field">
-        <span>User ID (UID)</span>
-        <input class="input" name="uid" autocomplete="username" placeholder="DOC000123 or PAT000123" value="${esc(state.authPrefillUid)}" required />
+        <span>UID</span>
+        <input class="input" name="uid" autocomplete="username" placeholder="Enter UID" value="${esc(state.authPrefillUid)}" required />
       </div>
       <div class="field">
         <span>Password</span>
-        <input class="input" name="password" type="password" autocomplete="current-password" placeholder="Your password" required />
+        <input class="input" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required />
       </div>
       <button class="btn primary" type="submit">Sign in</button>
-      <div class="note">Your session is stored in <span class="code">JSESSIONID</span>.</div>
     </form>
   `;
 
@@ -833,7 +805,11 @@ function renderAuth() {
       </div>
       <div class="field">
         <span>Name</span>
-        <input class="input" name="name" autocomplete="name" placeholder="Full name" required />
+        <input class="input" name="name" autocomplete="name" placeholder="Enter name" required />
+      </div>
+      <div class="field">
+        <span>Password</span>
+        <input class="input" name="password" type="password" autocomplete="new-password" placeholder="Create a password" required />
       </div>
       <div class="field">
         <span>Phone (optional)</span>
@@ -843,31 +819,37 @@ function renderAuth() {
         <span>Email (optional)</span>
         <input class="input" name="email" autocomplete="email" placeholder="Email" />
       </div>
-      <div class="field">
-        <span>Password</span>
-        <input class="input" name="password" type="password" autocomplete="new-password" placeholder="Create a password" required />
-      </div>
       <button class="btn primary" type="submit">Create account</button>
-      <div class="note">After registration, copy your UID and sign in.</div>
     </form>
   `;
 
-  const right = `
-    <div class="card pad">
-      <div class="stack">
-        ${tabs}
-        ${tabLogin ? loginForm : registerForm}
-      </div>
+  const switcher = `
+    <div class="row auth-switch">
+      <span class="note">${tabLogin ? 'No account?' : 'Already have an account?'}</span>
+      <button class="btn small ghost" type="button" data-action="auth-tab" data-tab="${tabLogin ? 'register' : 'login'}">
+        ${tabLogin ? 'Create account' : 'Sign in'}
+      </button>
     </div>
   `;
 
   const body = state.initializing
-    ? `<div class="center"><div class="row"><div class="spinner"></div><div class="note">Checking session...</div></div></div>`
+    ? `
+      <div class="auth-wrap">
+        <div class="card pad auth-min">
+          <h1 class="umr-title">${esc(APP_NAME)}</h1>
+          <div class="row" style="justify-content:center">
+            <div class="spinner"></div>
+            <div class="note">Checking session...</div>
+          </div>
+        </div>
+      </div>
+    `
     : `
       <div class="auth-wrap">
-        <div class="auth-card">
-          ${hero}
-          ${right}
+        <div class="card pad auth-min">
+          <h1 class="umr-title">${esc(APP_NAME)}</h1>
+          ${tabRegister ? registerForm : loginForm}
+          ${switcher}
         </div>
       </div>
     `;
